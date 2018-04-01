@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/twinklebear-dev-sdl2-tutorial.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
