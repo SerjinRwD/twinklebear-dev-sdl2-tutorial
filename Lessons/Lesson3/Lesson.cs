@@ -1,4 +1,4 @@
-namespace twinklebear_dev_sdl2_tutorial.Lessons.Lesson2
+namespace twinklebear_dev_sdl2_tutorial.Lessons.Lesson3
 {
     using SDL2;
     using System;
@@ -8,8 +8,8 @@ namespace twinklebear_dev_sdl2_tutorial.Lessons.Lesson2
     {
         const int WIDTH = 640;
         const int HEIGHT = 480;
-
-        const string TITLE = "Lesson 2";
+        const int TILE_SIZE = 40;
+        const string TITLE = "Lesson 3";
 
         public void Execute()
         {
@@ -17,6 +17,8 @@ namespace twinklebear_dev_sdl2_tutorial.Lessons.Lesson2
             {
                 SdlLogger.Fatal(nameof(SDL.SDL_Init));
             }
+
+            SDL_image.IMG_Init(SDL_image.IMG_InitFlags.IMG_INIT_PNG);
 
             var window = SDL.SDL_CreateWindow(TITLE, 0, 0, WIDTH, HEIGHT, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
 
@@ -37,26 +39,30 @@ namespace twinklebear_dev_sdl2_tutorial.Lessons.Lesson2
                     () => ReleaseAndQuit(window, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero));
             }
 
-            var background = Resources.LoadTextureFromBitmap(Resources.GetFilePath(@"lesson2/background.bmp"), renderer);
-            var image = Resources.LoadTextureFromBitmap(Resources.GetFilePath(@"lesson2/image.bmp"), renderer);
+            var background = Resources.LoadTextureFromImage(Resources.GetFilePath(@"lesson3/background.png"), renderer);
+            var image = Resources.LoadTextureFromImage(Resources.GetFilePath(@"lesson3/image.png"), renderer);
             
             if(background == IntPtr.Zero || image == IntPtr.Zero)
             {
                 SdlLogger.Fatal(
-                    nameof(Resources.LoadTextureFromBitmap),
+                    nameof(Resources.LoadTextureFromImage),
                     () => ReleaseAndQuit(window, renderer, background, image));
             }
 
             SDL.SDL_RenderClear(renderer);
-            
-            uint format;
-            int x, y, iW, iH, bW, bH, access;
 
-            SDL.SDL_QueryTexture(background, out format, out access, out bW, out bH);
-            SdlDrawing.RenderTexture(background, renderer, 0, 0);
-            SdlDrawing.RenderTexture(background, renderer, bW, 0);
-            SdlDrawing.RenderTexture(background, renderer, 0, bH);
-            SdlDrawing.RenderTexture(background, renderer, bW, bH);
+            var xTiles = WIDTH / TILE_SIZE;
+            var yTiles = HEIGHT / TILE_SIZE;
+            uint format;
+            int x, y, iW, iH, access;
+
+            for(var i = 0; i < xTiles * yTiles; i++)
+            {
+                x = (i % xTiles) * TILE_SIZE;
+                y = (i / xTiles) * TILE_SIZE;
+
+                SdlDrawing.RenderTexture(background, renderer, x, y, TILE_SIZE, TILE_SIZE);
+            }
 
             SDL.SDL_QueryTexture(image, out format, out access, out iW, out iH);
             x = WIDTH / 2 - iW / 2;
@@ -92,6 +98,7 @@ namespace twinklebear_dev_sdl2_tutorial.Lessons.Lesson2
                 SDL.SDL_DestroyTexture(image);
             }
 
+            SDL_image.IMG_Quit();
             SDL.SDL_Quit();
 
             return false;

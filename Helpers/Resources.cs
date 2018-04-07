@@ -34,7 +34,7 @@ namespace twinklebear_dev_sdl2_tutorial.Helpers
             return path;
         }
 
-        public static IntPtr LoadTexture(string path, IntPtr renderer)
+        public static IntPtr LoadTextureFromBitmap(string path, IntPtr renderer)
         {
             var texture = IntPtr.Zero;
 
@@ -53,6 +53,18 @@ namespace twinklebear_dev_sdl2_tutorial.Helpers
             else
             {
                 SdlLogger.Error(nameof(SDL.SDL_LoadBMP));
+            }
+
+            return texture;
+        }
+
+        public static IntPtr LoadTextureFromImage(string path, IntPtr renderer)
+        {
+            var texture = SDL_image.IMG_LoadTexture(renderer, path);
+
+            if(texture == IntPtr.Zero)
+            {
+                SdlLogger.Error(nameof(SDL_image.IMG_LoadTexture));
             }
 
             return texture;

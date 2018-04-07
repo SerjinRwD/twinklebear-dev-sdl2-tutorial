@@ -8,6 +8,11 @@
       <None Include="resources\lesson1\hello.bmp" CopyToOutputDirectory="PreserveNewest" />
       <None Include="resources\lesson2\background.bmp" CopyToOutputDirectory="PreserveNewest" />
       <None Include="resources\lesson2\image.bmp" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="resources\lesson3\background.png" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="resources\lesson4\image.png" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="resources\lesson5\image.png" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="resources\lesson6\sample.ttf" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="resources\lesson6\long_pixel-7.ttf" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <PropertyGroup>
